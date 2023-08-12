@@ -18,7 +18,7 @@
                         <ng-container *ngIf="errorMessage ">
                             <div class="text-danger">{{errorMessage}}</div>
                         </ng-container>
-       
+
                     </ng-template>
                     <ng-container *ngIf="account$ |async as accountDetails ; else errorTemplate">
                         <div class="mb-2">
@@ -39,27 +39,27 @@
                                     <td>{{op.operationDate | date:'dd-MM-yyyy'}}</td>
                                     <td>{{op.type}}</td>
                                     <td class="text-end">{{op.amount |number :'1.2-2'}}</td>
-                                  
+
                                 </tr>
-                            </tbody> 
+                            </tbody>
                         </table>
                         <ul class="nav nav-pills">
                             <li *ngFor="let item of [].constructor(accountDetails.totalPages); let page=index" >
                                 <a [ngClass]="page==currentPage?'btn-info' : 'btn-outline-info'" (click)="goToPage(page)" class="btn  ms-1 mt-1">{{page}}</a>
                             </li>
-                            
-                           
+
+
                         </ul>
                     </ng-container>
-              
+
                 </div>
             </div>
         </div>
         <div class="col  col-md-6">
             <div class="card" *ngIf="account$">
                 <div class="card-header">Operations : </div>
-                <div class="card-body">
-                  
+                <div class="card-body" *ngIf="authService.roles.includes('ADMIN')">
+
                     <form [formGroup]="operationFormGroup" (ngSubmit)="hundleAccountOperation()" method="post">
                         <div class="form-check form-check-inline">
                           <input class="form-check-input" type="radio" formControlName="operationType" value="DEBIT">

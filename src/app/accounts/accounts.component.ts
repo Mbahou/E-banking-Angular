@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { AccountsService } from '../services/accounts.service';
 import { Observable, catchError, throwError } from 'rxjs';
 import { AccountDetails } from '../model/account.model';
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-accounts',
@@ -18,7 +19,7 @@ export class AccountsComponent implements OnInit {
   errorMessage! : string;
 
 
-  constructor(private fb : FormBuilder , private  accountService : AccountsService) { }
+  constructor(private fb : FormBuilder , private  accountService : AccountsService,public  authService : AuthService) { }
 
   ngOnInit(): void {
     this.accountFormGroup=this.fb.group({
@@ -31,7 +32,7 @@ export class AccountsComponent implements OnInit {
       accountDestination : this.fb.control(null)
 
     })
-  
+
   }
   hamdleSearchAccount(){
     let accountId =this.accountFormGroup.value.accountId;
@@ -62,7 +63,7 @@ export class AccountsComponent implements OnInit {
         },
         error : (err)=>{
           console.log(err);
-        } 
+        }
       });
     }
     else if(typeOperation=='CREDIT'){
@@ -74,9 +75,9 @@ export class AccountsComponent implements OnInit {
         },
         error : (err)=>{
           console.log(err);
-        } 
+        }
       });
-      
+
     }
     else if(typeOperation=='TRANSFER'){
       this.accountService.transfer(accountId,accountdestination, amount,description).subscribe({
@@ -91,7 +92,7 @@ export class AccountsComponent implements OnInit {
       });
 
     }
-    
+
   }
 
   }
